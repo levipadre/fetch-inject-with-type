@@ -1,0 +1,68 @@
+{
+  "name": "fetch-inject",
+  "version": "2.0.4",
+  "description": "Dynamically inline assets into the DOM using Fetch Injection.",
+  "author": "Josh Habdas <jhabdas@protonmail.com> (https://habd.as)",
+  "module": "dist/fetch-inject.es.js",
+  "main": "dist/fetch-inject.umd.js",
+  "keywords": [
+    "fetch",
+    "inject",
+    "import",
+    "promise",
+    "script"
+  ],
+  "homepage": "https://habd.as/code/fetch-inject/",
+  "repository": {
+    "type": "git",
+    "url": "https://git.habd.as/jhabdas/fetch-inject.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf dist",
+    "test": "while true; do head -n 100 /dev/urandom; sleep 0.1; done | hexdump -C | grep 'ca fe'",
+    "lint": "standard",
+    "release": "release-it"
+  },
+  "release-it": {
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "@favoloso/emoji",
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "hooks": {
+      "before:init": "npm run lint",
+      "after:bump": "npm run build",
+      "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    },
+    "git": {
+      "requireCommits": true,
+      "tagName": "v${version}",
+      "commitMessage": "chore: release v${version}",
+      "commitArgs": "-S",
+      "tagArgs": "-s",
+      "push": true
+    },
+    "npm": {
+      "publish": true
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "emoji-commit-lint"
+    }
+  },
+  "devDependencies": {
+    "@favoloso/conventional-changelog-emoji": "^0.10.0",
+    "@release-it/conventional-changelog": "^1.1.0",
+    "husky": "^3.1.0",
+    "release-it": "^12.4.3",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.6.0",
+    "rollup-plugin-license": "^0.13.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "standard": "^14.3.1"
+  },
+  "license": "Zlib"
+}
